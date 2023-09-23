@@ -14,9 +14,9 @@ class UserManager(BaseUserManager):
     """Manager for users."""
 
     def create_user(self, email, password=None, **extra_fields):
-        """Create, save, and return a new user."""
+        """Create, save and return a new user."""
         if not email:
-            raise ValueError('User must have an email address')
+            raise ValueError('User must have an email address.')
         user = self.model(email=self.normalize_email(email), **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -32,6 +32,7 @@ class UserManager(BaseUserManager):
 
         return user
 
+
 class User(AbstractBaseUser, PermissionsMixin):
     """User in the system."""
     email = models.EmailField(max_length=255, unique=True)
@@ -42,6 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
 
 class Recipe(models.Model):
     """Recipe object."""
@@ -56,5 +58,4 @@ class Recipe(models.Model):
     link = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
-            return self.title
-
+        return self.title
